@@ -1,29 +1,11 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { useState } from "react";
 
-import {
-  Modal,
-  Input,
-  Checkbox,
-  Form,
-  TextArea,
-  Toast,
-  ErrorBlock,
-  ResultPage,
-  ProgressBar,
-  ImageUploadItem,
-  Result,
-} from "antd-mobile";
+import { Modal, Form, Toast } from "antd-mobile";
 import { UserDetailsStep } from "./UserDetailsStep";
 import { completeStep, errorStep } from "./SubmitForm";
 import { UploadStep } from "./UploadStep";
 
-export const ImageSubmitModal = ({
-  open,
-  onCreate,
-  onCancel,
-  setFileList,
-  fileList,
-}: any) => {
+export const ImageSubmitModal = ({ open, onCancel, fileList }: any) => {
   const [values, setValues] = useState({});
   const [currentStep, setCurrentStep] = useState(0);
   const [form] = Form.useForm();
@@ -32,13 +14,12 @@ export const ImageSubmitModal = ({
       .validateFields()
       .then((values: any) => {
         form.resetFields();
-        onCreate(values);
-        console.log(values);
-        setValues(values.email);
+        setValues(values);
 
         setCurrentStep(1);
       })
       .catch((info: any) => {
+        console.log(info);
         Toast.show({
           maskStyle: { minWidth: "600px" },
           icon: "fail",
@@ -60,22 +41,23 @@ export const ImageSubmitModal = ({
         danger: true,
       },
     ],
-    [
-      {
-        key: "action",
-        text: "Next",
-        danger: true,
-      },
-    ],
+    [],
+    [],
+    [],
   ];
   return (
     <Modal
       visible={open}
-      title={currentStep === 0 ? "Submit your photos" : ""}
+      title={["Submit your photos", "Progress", "", ""][currentStep]}
       onClose={onCancel}
       actions={actions[currentStep]}
-      onAction={() => {
-        validate();
+      showCloseButton={currentStep !== 1}
+      onAction={(action) => {
+        if (action.key === "cancel") {
+          setCurrentStep(0);
+        } else if (action.key === "action") {
+          validate();
+        }
       }}
       content={
         [

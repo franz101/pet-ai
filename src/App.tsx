@@ -9,11 +9,6 @@ const App = () => {
   const [open, setOpen] = useState(false);
   const [fileList, setFileList] = useState<ImageUploadItem[]>(defaultImages);
 
-  const onCreate = (values: any) => {
-    console.log("Received values of form: ", values);
-    // setOpen(false);
-  };
-
   return (
     <div style={{ padding: 0 }}>
       <AutoCenter>
@@ -36,8 +31,6 @@ const App = () => {
         <ImageSubmitModal
           open={open}
           fileList={fileList}
-          setFileList={setFileList}
-          onCreate={onCreate}
           onCancel={() => {
             setOpen(false);
           }}
