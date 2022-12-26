@@ -1,26 +1,50 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import { AutoCenter, Grid, ImageUploadItem } from "antd-mobile";
+import { Gallery } from "./components/Gallery";
+import { ImageUpload, defaultImages } from "./components/ImageUpload";
+import { Logo } from "./components/Logo";
+import { ImageSubmitModal } from "./components/Modal";
 
-function App() {
+const App = () => {
+  const [open, setOpen] = useState(false);
+  const [fileList, setFileList] = useState<ImageUploadItem[]>(defaultImages);
+
+  const onCreate = (values: any) => {
+    console.log("Received values of form: ", values);
+    // setOpen(false);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div style={{ padding: 0 }}>
+      <AutoCenter>
+        <Grid columns={1} gap={8} style={{ maxWidth: "800px" }}>
+          <Grid.Item span={24}>
+            <Logo />
+          </Grid.Item>
+          <Grid.Item span={24}>
+            <ImageUpload
+              open={open}
+              setOpen={setOpen}
+              fileList={fileList}
+              setFileList={setFileList}
+            />
+          </Grid.Item>
+          <Grid.Item span={24}>
+            <Gallery />
+          </Grid.Item>
+        </Grid>
+        <ImageSubmitModal
+          open={open}
+          fileList={fileList}
+          setFileList={setFileList}
+          onCreate={onCreate}
+          onCancel={() => {
+            setOpen(false);
+          }}
+        />
+      </AutoCenter>
     </div>
   );
-}
+};
 
 export default App;
