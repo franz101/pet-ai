@@ -63,6 +63,7 @@ export const ImageUpload = ({
   const minCount = 3;
   // showModelAtFirst
   const [showModelAtFirst, setShowModelAtFirst] = useState(true);
+  const [fileListLength, setFileListLength] = useState(fileList.length);
   useEffect(() => {
     if (showModelAtFirst && fileList.length >= minCount) {
       setShowModelAtFirst(false);
@@ -109,7 +110,7 @@ export const ImageUpload = ({
             );
           }}
         >
-          {showModelAtFirst ? (
+          {showModelAtFirst && fileList.length === fileListLength ? (
             <animated.div key={"1212"} style={animation}>
               <div
                 style={{
