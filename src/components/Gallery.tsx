@@ -16,15 +16,18 @@ export const Gallery = () => {
           <Image
             src={"./img/dog_1.jpeg"}
             style={{ maxHeight: 400 }}
+            height={400}
             lazy={true}
-            fit="fill"
+            fit="cover"
           />
         </div>
         <div>
           <Image
             src={"./img/dog_2.jpeg"}
             style={{ maxHeight: 400 }}
+            height={400}
             lazy={true}
+            fit="cover"
           />
         </div>
         {/* <div>
